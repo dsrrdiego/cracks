@@ -1,6 +1,9 @@
 package com.work1.cracks.modelos;
 
 import lombok.NoArgsConstructor;
+
+import java.util.Date;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,8 +23,15 @@ public class User {
     @Column(nullable=false, unique=true)
     private String name;
     
-    @Column(nullable=false)
-    private String passwrd;
+    @Column
+    private String about;
+
+    @Column
+    private Date birthDate;
+
+    @Column
+    private String gender;
+
 
 
 }
