@@ -1,0 +1,4 @@
+2024-07-03 18:39:19.345618-03:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "SELECT * FROM USER_SCORE USERS [*]USER_SCORE"
+Syntax error in SQL statement "SELECT * FROM USER_SCORE USERS [*]USER_SCORE"; SQL statement:
+SELECT * FROM USER_SCORE USERS USER_SCORE [42000-224]
