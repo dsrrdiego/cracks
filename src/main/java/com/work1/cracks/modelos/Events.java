@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.hibernate.bytecode.internal.bytebuddy.PrivateAccessorException;
 
-import com.work1.cracks.interfaces.Status;
+import com.work1.cracks.interfaces.StatusEvent;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -39,7 +39,7 @@ public class Events {
     private List<Sports> sports;
 
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private StatusEvent status;
 
     private String location;
     private LocalDate dateInit;
