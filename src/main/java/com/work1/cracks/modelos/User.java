@@ -2,7 +2,7 @@ package com.work1.cracks.modelos;
 
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -27,10 +27,31 @@ public class User {
     private String about;
 
     @Column
-    private Date birthDate;
+    private LocalDate birthDate;
 
     @Column
     private String gender;
+
+    @Column
+    private String email;
+
+    @Column
+    private String phone;
+
+    @ManyToOne
+    private Cities city;
+
+    @Column
+    private String picture;
+
+
+
+
+
+
+
+
+
 
 
 

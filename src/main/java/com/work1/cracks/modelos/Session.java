@@ -5,6 +5,8 @@ package com.work1.cracks.modelos;
 import java.time.LocalDate;
 import java.util.Date;
 
+import com.work1.cracks.interfaces.TypeLogin;
+
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
@@ -25,12 +27,29 @@ public class Session {
     @OneToOne
     private User users;
 
-    @Column(nullable=false)
-    private String passwrd;
+    @Column
+    private Boolean verified=true;
+
+    @Column()
+    private String verifiedContact;
     
     @Column
-    private Boolean verified;
+    private Boolean closeAcount=false;
 
+    @Column(nullable=false)
+    private String passwrd;
+
+    @Column()
+    private boolean closeSession=false;
+
+    @Column()
+    private boolean blockAcount=false;
+
+    @Enumerated(EnumType.STRING)
+    private TypeLogin typeLogin=TypeLogin.MANUAL;
+
+
+    
     @Column
     private LocalDate reigsterDate;
 
