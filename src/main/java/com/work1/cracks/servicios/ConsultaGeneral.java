@@ -17,4 +17,6 @@ public class ConsultaGeneral {
         
         return query.getResultList();
     }
+
+    
 }
