@@ -21,7 +21,10 @@ import com.work1.cracks.repos.RepoSession;
 import com.work1.cracks.repos.RepoUser;
 import com.work1.cracks.servicios.ConsultaGeneral;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
+@Tag(name = "Controlador general de la API", description = "Encargado de todo lo referente a subir y bajar Albums de audio")
 public class AuthController {
     @Autowired
     private RepoUser repoUser;
