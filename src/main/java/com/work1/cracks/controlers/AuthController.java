@@ -16,8 +16,10 @@ import com.work1.cracks.interfaces.TypeLogin;
 import com.work1.cracks.modelos.User;
 import com.work1.cracks.modelos.Cities;
 import com.work1.cracks.modelos.Session;
+import com.work1.cracks.modelos.Sports;
 import com.work1.cracks.repos.RepoCities;
 import com.work1.cracks.repos.RepoSession;
+import com.work1.cracks.repos.RepoSports;
 import com.work1.cracks.repos.RepoUser;
 import com.work1.cracks.servicios.ConsultaGeneral;
 
@@ -58,6 +60,24 @@ public class AuthController {
         repoSession.save(session);
 
         return new ResponseEntity<String>("Registro exitoso para El usuario: "+nombre,HttpStatus.OK);
+    }
+
+    @Autowired
+    private RepoSports r;
+    @GetMapping("/a")
+    public Sports  a(){
+        Sports s=new Sports();
+        s.setTitle("rugby");
+        s.setStatics("statcis");
+        r.save(s);
+        return s;
+
+    }
+    @GetMapping("/s")
+    public List<Sports>  s(){
+        
+        return r.findAll();
+
     }
   
 

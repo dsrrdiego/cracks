@@ -1,12 +1,13 @@
 package com.work1.cracks.modelos;
-    
 
 import java.time.LocalDateTime;
 
-import com.work1.cracks.modelos.aux.NameUserScore;
+import com.work1.cracks.modelos.aux.CategoryGoals;
+import com.work1.cracks.modelos.aux.CommunityGoals;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
@@ -16,31 +17,23 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "UserScore")
-public class UserScore {
 
+@Data
+@Inheritance(strategy = InheritanceType.JOINED)
+
+// @Table(name = "Goals")
+
+public class Goals {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    private User user;
+    @Column(unique = true)
+    private String title;
 
     @ManyToOne
-    private Events event;
+    private CategoryGoals category;
 
     @ManyToOne
-    private NameUserScore name;
-    
-    @Column
-    private float score;
-
-    @Column
-    private float rangeInit;
-
-    @Column
-    private float rangeEnd;
-
-    @Column
-    private LocalDateTime registerDate;
+    private CommunityGoals community;
 }

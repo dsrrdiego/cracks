@@ -5,6 +5,7 @@ package com.work1.cracks.modelos;
 import java.time.LocalDate;
 import java.util.Date;
 
+import com.work1.cracks.interfaces.SessionRol;
 import com.work1.cracks.interfaces.TypeLogin;
 
 import jakarta.persistence.*;
@@ -48,6 +49,9 @@ public class Session {
     @Enumerated(EnumType.STRING)
     private TypeLogin typeLogin=TypeLogin.MANUAL;
 
+    @Enumerated(EnumType.STRING)
+    private SessionRol rol;
+
 
     
     @Column
@@ -57,6 +61,7 @@ public class Session {
         users=u;
         passwrd=psw;
         reigsterDate=LocalDate.now();
+        rol=SessionRol.USER;
     }
 
 }

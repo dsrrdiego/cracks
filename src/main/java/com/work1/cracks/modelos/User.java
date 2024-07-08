@@ -4,6 +4,8 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
+import com.work1.cracks.modelos.aux.Coordenadas;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -40,6 +42,9 @@ public class User {
 
     @ManyToOne
     private Cities city;
+
+    @ManyToOne
+    private Coordenadas cordenadas;
 
     @Column
     private String picture;

@@ -2,19 +2,12 @@ package com.work1.cracks.modelos;
 
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.List;
-
-import org.hibernate.bytecode.internal.bytebuddy.PrivateAccessorException;
 
 import com.work1.cracks.interfaces.Relation;
-import com.work1.cracks.interfaces.Role;
 
-// import com.work1.cracks.modelos.Events;
 
-import com.work1.cracks.interfaces.StatusEvent;
-import com.work1.cracks.interfaces.StatusParticipants;
+import com.work1.cracks.modelos.aux.RoleParticipants;
+import com.work1.cracks.modelos.aux.StatusParticipants;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -39,11 +32,11 @@ public class Participants {
     @ManyToOne
     private Events event;
 
-    @Enumerated(EnumType.STRING)
+    @ManyToOne
     private StatusParticipants status;
 
-    @Enumerated(EnumType.STRING)
-    private Role role;
+    @ManyToOne
+    private RoleParticipants role;
 
     private String linked;
 
@@ -55,17 +48,6 @@ public class Participants {
     private boolean achievementLevel;
 
     private float commitementLevel;
-
-    //Statics?
-
-
-
-
-
-
-
-
-
 
 
 }

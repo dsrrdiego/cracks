@@ -3,12 +3,11 @@ package com.work1.cracks.modelos;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.List;
+import java.time.LocalDateTime;
 
-import org.hibernate.bytecode.internal.bytebuddy.PrivateAccessorException;
-
-import com.work1.cracks.interfaces.StatusEvent;
+import com.work1.cracks.modelos.aux.CategoryEvents;
+import com.work1.cracks.modelos.aux.Coordenadas;
+import com.work1.cracks.modelos.aux.StatusEvents;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -22,7 +21,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "Events")
 public class Events {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -30,40 +29,44 @@ public class Events {
     @ManyToOne
     private User user;
 
+    @Column
     String title;
+
+    @Column
     String description;
 
-    //interest
+    @ManyToOne
+    private StatusEvents status;
 
-    @ManyToMany
-    private List<Sports> sports;
+    @ManyToOne
+    private Coordenadas location;
 
-    @Enumerated(EnumType.STRING)
-    private StatusEvent status;
+    @Column
+    private LocalDateTime dateInit;
 
-    private String location;
-    private LocalDate dateInit;
-    private LocalDate dateEnd;
-    private LocalTime hourInit;
-    private LocalTime hourEnd;
+    @Column
+    private LocalDateTime dateEnd;
+
+    @Column
     private String picture;
+
+    @Column
     private int maxParticipantes;
-    private String visibility;
+
+    @Column
     private boolean enabled;
+
+    @Column
     private boolean approvalRequired;
-    private String category;
+
+    @ManyToOne
+    private CategoryEvents category;
+
+    @Column
     private String urlShare;
-    private int visibilizations;
-    private int likes;
+
+
+    @Column
     private LocalDate registerDate;
-
-
-
-
-
-
-
-
-
 
 }

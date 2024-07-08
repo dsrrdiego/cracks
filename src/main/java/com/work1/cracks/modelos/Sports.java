@@ -1,37 +1,43 @@
 package com.work1.cracks.modelos;
 
-import lombok.NoArgsConstructor;
+import java.time.LocalDateTime;
 
-import java.time.LocalDate;
-
-import com.work1.cracks.interfaces.Seasson;
+import com.work1.cracks.modelos.aux.ClimateSports;
+import com.work1.cracks.modelos.aux.DifficultySports;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
 @Entity
-@Table(name = "Sports")
-public class Sports {
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    
-    @Column(nullable = false, unique = true)
-    private String name;
+@EqualsAndHashCode(callSuper = true)
 
-    String description;
-    String category;
+public class Sports extends Goals{
+    // @Id
+    // @GeneratedValue(strategy = GenerationType.IDENTITY)
+    // private Long id;
 
-    @Enumerated(EnumType.STRING)
-    private Seasson seasson;
+   
+    @ManyToOne
+    private DifficultySports difficulty;
 
-    private String euipment;
-    
+    @ManyToOne
+    private ClimateSports climate;
+
+    @Column
+    private String statics;
+
+    @Column
+    private String equipament;
+
+
 }

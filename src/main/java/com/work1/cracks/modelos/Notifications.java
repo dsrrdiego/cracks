@@ -1,10 +1,11 @@
 package com.work1.cracks.modelos;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import com.work1.cracks.interfaces.ActiocNotification;
-import com.work1.cracks.interfaces.StatusNotification;
-import com.work1.cracks.interfaces.TypeNotification;
+import com.work1.cracks.modelos.aux.StatusNotification;
+import com.work1.cracks.modelos.aux.TypeNotification;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -25,28 +26,36 @@ public class Notifications {
     private Long id;
 
     @ManyToOne
-    private User user;
+    private User userTrget;
+
+    @ManyToOne
+    private User userOrigin;
 
     @ManyToOne
     private Events event;
 
-    @Enumerated(EnumType.STRING)
+    @ManyToOne
     private StatusNotification status;
 
-    @Enumerated(EnumType.STRING)
+    @ManyToOne
     private TypeNotification type;
 
+    @Column
     private String title;
+
 
     private int message;
 
     @Enumerated(EnumType.STRING)
     private ActiocNotification action;
 
-    private boolean automaticDelete;
+    @Column
+    private boolean automaticDelete=false;
 
-    private LocalDate visualizationDate;
+    @Column
+    private LocalDateTime visualizationDate;
     
-    private LocalDate registerDate;
+    @Column
+    private LocalDateTime registerDate;
 
 }
