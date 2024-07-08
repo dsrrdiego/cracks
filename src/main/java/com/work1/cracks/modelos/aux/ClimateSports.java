@@ -19,5 +19,5 @@ public class   ClimateSports {
     private Long id;
 
     @Column(unique = true)
-    private String status;
+    private String clima;
 }
