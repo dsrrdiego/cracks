@@ -9,4 +9,5 @@ import com.work1.cracks.modelos.User;
 public interface RepoUser extends JpaRepository<User,Long>{
     // List<User> findByName(String name);
     boolean existsByName(String name);
+    User findByName(String name);
 }
