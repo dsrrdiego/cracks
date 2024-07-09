@@ -13,7 +13,6 @@ import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,10 +23,19 @@ import lombok.Setter;
 @Entity
 
 @Data
-@EqualsAndHashCode(callSuper = true)
-
-public class InterestUser extends OwnerInterest {
+// @Inheritance(strategy = InheritanceType.JOINED)
+@Table(name="Interest")
+public class Interest {
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToOne
-    private User user;
+    private OwnerInterest owner;
+
+    @ManyToOne
+    private Goals goals_sport_interest;
+
+    @Column
+    private LocalDateTime creationData;
 }

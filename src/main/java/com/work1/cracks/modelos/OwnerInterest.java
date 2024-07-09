@@ -1,7 +1,6 @@
 package com.work1.cracks.modelos;
 
 
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -23,16 +22,11 @@ import lombok.Setter;
 @Entity
 
 @Data
-// @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name="InterestPadre")
-public class InterestPadre {
+@Inheritance(strategy = InheritanceType.JOINED)
+@Table(name="OwnerInterest")
+public class OwnerInterest {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    private Goals interest;
-
-    @Column
-    private LocalDateTime creationData;
 }
