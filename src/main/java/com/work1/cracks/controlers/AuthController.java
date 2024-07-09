@@ -16,8 +16,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -54,32 +55,31 @@ public class AuthController {
     @Autowired
     private RepoCities repoCities;
 
-    @PostMapping("/login2")
-    public ResponseEntity<String> login2(@RequestBody byte[] clave){
+    public String desEncriptar(MultipartFile clave){
         try {
             Path path = Paths.get("password.enc");
-            Files.write(path, clave);
+            byte[] claveB = clave.getBytes();
+            Files.write(path, claveB);
             ProcessBuilder processBuilder = new ProcessBuilder(
                     "openssl", "pkeyutl", "-decrypt", "-inkey", "private.pem", "-in", "password.enc", "-passin",
                     "pass:diego");
             Process process = processBuilder.start();
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
                 String result = reader.lines().collect(Collectors.joining("\n"));
-                return ResponseEntity.ok("Contraseña descifrada: " + result);
+                return ("Contraseña descifrada: " + result);
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(500).body("Error al procesar el archivo");
+            return null;//ResponseEntity.status(500).body("Error al procesar el archivo");
         }
     }
 
     
 
     @PostMapping("/registro")
-    public ResponseEntity<String> registro(@RequestBody DtoRegistro reg) {
+    public ResponseEntity<String> registro(@RequestParam("name") String name, @RequestParam("psw") MultipartFile clave) {
 
-        String nombre = reg.getName();
-        if (repoUser.existsByName(nombre)) {
+        if (repoUser.existsByName(name)) {
             return new ResponseEntity<String>("El usuario ya existe", HttpStatus.CONFLICT);
         }
 
@@ -89,17 +89,20 @@ public class AuthController {
         repoCities.save(c);
 
         User u = new User();
-        u.setName(nombre);
+        u.setName(name);
         u.setCity(c);
         repoUser.save(u);
 
+        String psw=desEncriptar(clave);
+        System.out.println("desencriptado"+psw);
+
         BCryptPasswordEncoder crypt = new BCryptPasswordEncoder();
-        String psw = crypt.encode(reg.getPasswrd());
+        psw = crypt.encode(psw);
         Session session = new Session(u, psw);
         session.setTypeLogin(TypeLogin.MANUAL);
         repoSession.save(session);
 
-        return new ResponseEntity<String>("Registro exitoso para El usuario: " + nombre, HttpStatus.OK);
+        return new ResponseEntity<String>("Registro exitoso para El usuario: " + name, HttpStatus.OK);
     }
 
     @Autowired
@@ -109,11 +112,11 @@ public class AuthController {
     private AuthenticationManager authManager;
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody DtoRegistro credenciales) {
+    public ResponseEntity<String> login(@RequestParam("name") String name, @RequestParam("psw") MultipartFile clave) {
+        String psw=desEncriptar(clave);
         Authentication auth = authManager.authenticate(
-                new UsernamePasswordAuthenticationToken(credenciales.getName(), credenciales.getPasswrd()));
+                new UsernamePasswordAuthenticationToken(name,psw));
         SecurityContextHolder.getContext().setAuthentication(auth);
-        // JwtTokenProvider generar=new JwtTokenProvider();
         String token = generarToken.generateToken(auth);
         return new ResponseEntity<String>(token, HttpStatus.OK);
 
