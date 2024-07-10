@@ -28,7 +28,6 @@ import org.springframework.stereotype.Service;
 
 import com.work1.cracks.auth.JwtAuthenticationFilter;
 import com.work1.cracks.auth.JwtTokenProvider;
-import com.work1.cracks.dtos.DtoRegistro;
 import com.work1.cracks.interfaces.TypeLogin;
 import com.work1.cracks.modelos.User;
 import com.work1.cracks.modelos.Cities;
@@ -40,11 +39,12 @@ import com.work1.cracks.repos.RepoSports;
 import com.work1.cracks.repos.RepoUser;
 import com.work1.cracks.servicios.ConsultaGeneral;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
-@Tag(name = "Controlador general de la API", description = "Encargado de todo lo referente a subir y bajar Albums de audio")
+@Tag(name = "Controlador de Autenticación", description = "Encargado de todo lo referente Registro y Login")
 public class AuthController {
     @Autowired
     private RepoUser repoUser;
@@ -55,7 +55,7 @@ public class AuthController {
     @Autowired
     private RepoCities repoCities;
 
-    public String desEncriptar(MultipartFile clave){
+    public String desEncriptar(MultipartFile clave) {
         try {
             Path path = Paths.get("password.enc");
             byte[] claveB = clave.getBytes();
@@ -70,14 +70,14 @@ public class AuthController {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return null;//ResponseEntity.status(500).body("Error al procesar el archivo");
+            return null;// ResponseEntity.status(500).body("Error al procesar el archivo");
         }
     }
 
-    
-
-    @PostMapping("/registro")
-    public ResponseEntity<String> registro(@RequestParam("name") String name, @RequestParam("psw") MultipartFile clave) {
+    @Operation(summary = "Registro de Usuario", description = "Punto de entrada para Registrar un Usuario Nuevo")
+    @PostMapping(value = "/registro", consumes = "multipart/form-data")
+    public ResponseEntity<String> registro(@RequestParam("name") String name,
+            @RequestParam("psw") MultipartFile clave) {
 
         if (repoUser.existsByName(name)) {
             return new ResponseEntity<String>("El usuario ya existe", HttpStatus.CONFLICT);
@@ -93,8 +93,8 @@ public class AuthController {
         u.setCity(c);
         repoUser.save(u);
 
-        String psw=desEncriptar(clave);
-        System.out.println("desencriptado"+psw);
+        String psw = desEncriptar(clave);
+        System.out.println("desencriptado" + psw);
 
         BCryptPasswordEncoder crypt = new BCryptPasswordEncoder();
         psw = crypt.encode(psw);
@@ -111,11 +111,13 @@ public class AuthController {
     @Autowired
     private AuthenticationManager authManager;
 
-    @PostMapping("/login")
+
+    @Operation(summary = "Logueo de Usuario", description = "Punto de entrada para el Usuario, aqui recibirá un Token para tener acceso a la API")
+    @PostMapping(value = "/login", consumes = "multipart/form-data")
     public ResponseEntity<String> login(@RequestParam("name") String name, @RequestParam("psw") MultipartFile clave) {
-        String psw=desEncriptar(clave);
+        String psw = desEncriptar(clave);
         Authentication auth = authManager.authenticate(
-                new UsernamePasswordAuthenticationToken(name,psw));
+                new UsernamePasswordAuthenticationToken(name, psw));
         SecurityContextHolder.getContext().setAuthentication(auth);
         String token = generarToken.generateToken(auth);
         return new ResponseEntity<String>(token, HttpStatus.OK);
@@ -125,6 +127,7 @@ public class AuthController {
     @Autowired
     JwtAuthenticationFilter jwtFiltro;
 
+    @Operation(summary = "Punto de prueba de acceso ", description = "Ingresar con Token")
     @GetMapping("/hola")
     public String hola(HttpServletRequest request) {
 
@@ -132,7 +135,7 @@ public class AuthController {
 
         String a = generarToken.getUsername(token);
 
-        return "Entraste" + a;
+        return "Hola " + a;
     }
 
 }

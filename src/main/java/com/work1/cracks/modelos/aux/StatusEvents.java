@@ -20,4 +20,8 @@ public class StatusEvents {
 
     @Column(unique = true)
     private String status;
+
+    public StatusEvents(String status){
+        this.status=status;
+    }
 }

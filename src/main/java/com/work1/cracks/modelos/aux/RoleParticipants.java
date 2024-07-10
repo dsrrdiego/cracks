@@ -20,4 +20,8 @@ public class RoleParticipants {
 
     @Column(unique = true)
     private String role;
+
+    public RoleParticipants(String role){
+        this.role=role;
+    }
 }
