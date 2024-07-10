@@ -51,7 +51,7 @@ public class SpringSecurityConfig {
 
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests((authorize) -> {
-                    authorize.requestMatchers("/monitor.html").permitAll();
+                    authorize.requestMatchers("/monitor.html","/cracks.html").permitAll();
                     authorize.requestMatchers("/swagger-ui/**","/v3/api-docs/**").permitAll();
                     // websecurity.ignoring().antMatchers("/swagger-ui/**", "/v3/api-docs/**");
                     //                    authorize.requestMatchers(HttpMethod.POST, "/api/**").hasRole("ADMIN");
