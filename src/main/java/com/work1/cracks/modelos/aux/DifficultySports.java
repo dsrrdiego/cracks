@@ -20,4 +20,8 @@ public class   DifficultySports {
 
     @Column(unique = true)
     private String difficulty;
+
+    public DifficultySports(String dif){
+        difficulty=dif;
+    }
 }
