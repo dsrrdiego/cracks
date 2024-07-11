@@ -1,6 +1,7 @@
 package com.work1.cracks.controlers;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
@@ -20,6 +21,8 @@ import com.work1.cracks.repos.aux.RepoStatusEvents;
 import com.work1.cracks.repos.aux.RepoStatusParticipants;
 
 import org.springframework.context.ApplicationContext;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 
 @Component
 public class runController implements CommandLineRunner {
@@ -36,16 +39,42 @@ public class runController implements CommandLineRunner {
     @Autowired
     RepoDifficultySports repoDifficultySports;
 
-    @Autowired
-    private ApplicationContext applicationContext;
+    // @Autowired
+    // private ApplicationContext applicationContext;
 
     @Override
     public void run(String... args) throws Exception {
-        String rutaModelos="com.work1.cracks.modelos.aux.";
-        String rutaRepos="com.work1.cracks.repos.aux.";
-        // String rutaModelos="com.work1.cracks.modelos.aux.";
+        
+            String[] dificultades={"Facil","Dificil"};
+            carga("DifficultySports",repoDifficultySports,dificultades);
+
+            String[] climas={"Autun","Veeran"};
+            carga("ClimateSports",repoClimate,climas);
+
+
+            
+    }
+
+    // @Autowired 
+    // private RepoGenerico repoGenerico;
+
+    
+    
+    public <T,R extends JpaRepository<T,?>> void carga(String tabla, R repo ,String[] lista) throws ClassNotFoundException, NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
         try {
-            ArrayList<DatosInterface> todo = new ArrayList<>();
+            T t=(T) Class.forName("com.work1.cracks.modelos.aux."+tabla);
+            Constructor<?> constructor = ((Class) t).getConstructor(String.class);
+            for (String i : lista) {
+                T obj = (T) constructor.newInstance(i);
+                repo.save(obj);
+            }
+        } catch (Exception e) {
+            System.out.println("\n\n"+e+"Los datos iniciales ya estan cargados para "+tabla+"\n\n");
+        }
+    }
+}
+
+   // ArrayList<DatosInterface> todo = new ArrayList<>();
 
             // DatosInterface tablaRoleParticipants = new DatosInterface();
             // tablaRoleParticipants.nombre = "RoleParticipants";
@@ -54,11 +83,12 @@ public class runController implements CommandLineRunner {
             // todo.add(tablaRoleParticipants);
 
             // DificultySports
-            DatosInterface tablaDifi = new DatosInterface();
-            tablaDifi.nombre = rutaModelos+"DifficultySports";
-            tablaDifi.repo = repoDifficultySports;
-            tablaDifi.datos = new String[] { "a", "b", "c" };
-            todo.add(tablaDifi);
+            // DatosInterface tablaDifi = new DatosInterface();
+            // tablaDifi.nombre = rutaModelos+"DifficultySports";
+            // tablaDifi.repo = repoDifficultySports;
+            // tablaDifi.datos = new String[] { "a", "b", "c" };
+            // todo.add(tablaDifi);
+
 
             // Cargar
 
@@ -96,23 +126,3 @@ public class runController implements CommandLineRunner {
             // ClimateSports clima = new ClimateSports();
             // clima.setClima("otoño");
             // repoClimate.save(clima);
-        } catch (Exception e) {
-            System.out.println("\n\n"+e+"Los datos iniciales ya estan cargados\n\n");
-            e.printStackTrace();
-
-        }
-
-    }
-    private Method findSaveMethod(Class<?> clazz, Class<?> paramType) {
-        // Buscamos en la interfaz del repositorio en lugar del proxy
-        for (Class<?> iface : clazz.getInterfaces()) {
-            for (Method method : iface.getMethods()) {
-                if (method.getName().equals("save") && method.getParameterCount() == 1 &&
-                    method.getParameterTypes()[0].equals(paramType)) {
-                    return method;
-                }
-            }
-        }
-        return null;
-    }
-}

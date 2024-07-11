@@ -20,4 +20,8 @@ public class   ClimateSports {
 
     @Column(unique = true)
     private String clima;
+
+    public ClimateSports(String clima){
+        this.clima=clima;
+    }
 }
