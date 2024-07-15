@@ -19,5 +19,9 @@ public class CategoryEvents {
     private Long id;
 
     @Column(unique = true)
-    private String Category;
+    private String category;
+
+    public CategoryEvents(String cat){
+        category=cat;
+    }
 }

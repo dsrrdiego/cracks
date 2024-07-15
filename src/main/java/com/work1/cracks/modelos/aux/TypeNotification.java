@@ -20,4 +20,8 @@ public class   TypeNotification {
 
     @Column(unique = true)
     private String type;
+
+    public TypeNotification(String t){
+        type=t;
+    }
 }

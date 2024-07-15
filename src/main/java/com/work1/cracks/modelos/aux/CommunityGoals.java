@@ -20,4 +20,8 @@ public class CommunityGoals {
 
     @Column(unique = true)
     private String community;
+
+    public CommunityGoals (String c){
+        community=c;
+    }
 }

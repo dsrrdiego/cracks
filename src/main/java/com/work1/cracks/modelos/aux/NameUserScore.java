@@ -22,4 +22,8 @@ public class NameUserScore {
 
     @Column(unique = true)
     private String name;
+
+    public NameUserScore(String n){
+        name=n;
+    }
 }

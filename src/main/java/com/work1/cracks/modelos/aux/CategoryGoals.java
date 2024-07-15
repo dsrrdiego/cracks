@@ -19,5 +19,9 @@ public class CategoryGoals {
     private Long id;
 
     @Column(unique = true)
-    private String Category;
+    private String category;
+
+    public CategoryGoals(String c) {
+        category=c;
+    }
 }

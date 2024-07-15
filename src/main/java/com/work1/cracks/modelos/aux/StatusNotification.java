@@ -20,4 +20,8 @@ public class StatusNotification {
 
     @Column(unique = true)
     private String status;
+
+    public StatusNotification(String s){
+        status=s;
+    }
 }
