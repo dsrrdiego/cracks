@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.work1.cracks.dtos.UserActivitiesDto;
 import com.work1.cracks.modelos.Interest;
 import com.work1.cracks.repos.RepoInterest;
 
@@ -23,6 +24,14 @@ public class InterestsController {
     @PersistenceContext
     private EntityManager entityManager;
 
+    @GetMapping("/pullUserActivities/{id}")
+    public ResponseEntity<List<UserActivitiesDto>> pullUserActivities(@PathVariable Long id) {
+         
+        String jpql = "SELECT new com.work1.cracks.dtos.UserActivitiesDto(i.id, :id,i.goal_sport_interest.title) FROM Interest i WHERE TYPE(i.owner) = InterestUser AND i.owner.user.id=:id";
+        TypedQuery<UserActivitiesDto> query = entityManager.createQuery(jpql, UserActivitiesDto.class);
+        query.setParameter("id", id);
+        return new ResponseEntity<>(query.getResultList(), HttpStatus.OK);
+    }
     @GetMapping("/userActivities/{id}")
     public ResponseEntity<List<String>> goals(@PathVariable Long id) {
         String jpql = "SELECT i.goal_sport_interest.title FROM Interest i WHERE TYPE(i.owner) = InterestUser AND TYPE(i.goal_sport_interest)=Goals AND i.owner.user.id=:id";

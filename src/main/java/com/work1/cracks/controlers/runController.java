@@ -159,13 +159,13 @@ public class runController implements CommandLineRunner {
         // g2.setTitle("Engordar");
         // rg.save(g2);
 
-        Sports s=new Sports();
-        s.setTitle("futbol");
-        rs.save(s);
+        // Sports s=new Sports();
+        // s.setTitle("futbol");
+        // rs.save(s);
 
-        Sports s2=new Sports();
-        s2.setTitle("Rugby");
-        rs.save(s2);
+        // Sports s2=new Sports();
+        // s2.setTitle("Rugby");
+        // rs.save(s2);
 
 
 
