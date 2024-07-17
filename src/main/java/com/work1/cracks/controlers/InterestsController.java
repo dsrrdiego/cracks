@@ -27,17 +27,31 @@ public class InterestsController {
     public ResponseEntity<List<String>> goals(@PathVariable Long id) {
         String jpql = "SELECT i.goal_sport_interest.title FROM Interest i WHERE TYPE(i.owner) = InterestUser AND TYPE(i.goal_sport_interest)=Goals AND i.owner.user.id=:id";
         TypedQuery<String> query = entityManager.createQuery(jpql, String.class);
-        query.setParameter("id",id);
+        query.setParameter("id", id);
         return new ResponseEntity<>(query.getResultList(), HttpStatus.OK);
     }
 
     @GetMapping("/userSports/{id}")
-    public ResponseEntity<List<String>> sports(@PathVariable Long id){
+    public ResponseEntity<List<String>> sports(@PathVariable Long id) {
         String jpql = "SELECT i.goal_sport_interest.title FROM Interest i WHERE TYPE(i.owner) = InterestUser AND TYPE(i.goal_sport_interest)=Sports AND i.owner.user.id=:id";
         TypedQuery<String> query = entityManager.createQuery(jpql, String.class);
-        query.setParameter("id",id);
+        query.setParameter("id", id);
+        return new ResponseEntity<>(query.getResultList(), HttpStatus.OK);
+    }
+    @GetMapping("/eventActivities/{id}")
+    public ResponseEntity<List<String>> eventgoals(@PathVariable Long id) {
+        String jpql = "SELECT i.goal_sport_interest.title FROM Interest i WHERE TYPE(i.owner) = InterestEvent AND TYPE(i.goal_sport_interest)=Goals AND i.owner.event.id=:id";
+        TypedQuery<String> query = entityManager.createQuery(jpql, String.class);
+        query.setParameter("id", id);
+        return new ResponseEntity<>(query.getResultList(), HttpStatus.OK);
+    }
 
-    return new ResponseEntity<>(query.getResultList(),HttpStatus.OK);
+    @GetMapping("/eventSports/{id}")
+    public ResponseEntity<List<String>> eventSports(@PathVariable Long id) {
+        String jpql = "SELECT i.goal_sport_interest.title FROM Interest i WHERE TYPE(i.owner) = InterestEvent AND TYPE(i.goal_sport_interest)=Sports AND i.owner.event.id=:id";
+        TypedQuery<String> query = entityManager.createQuery(jpql, String.class);
+        query.setParameter("id", id);
+        return new ResponseEntity<>(query.getResultList(), HttpStatus.OK);
     }
 
 }

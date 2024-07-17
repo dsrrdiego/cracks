@@ -10,6 +10,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import com.work1.cracks.modelos.Events;
+import com.work1.cracks.modelos.Goals;
+import com.work1.cracks.modelos.Sports;
+import com.work1.cracks.modelos.User;
 import com.work1.cracks.modelos.aux.ClimateSports;
 import com.work1.cracks.modelos.aux.DifficultySports;
 import com.work1.cracks.modelos.aux.RoleParticipants;
@@ -17,11 +20,14 @@ import com.work1.cracks.modelos.aux.StatusEvents;
 import com.work1.cracks.modelos.aux.StatusParticipants;
 import com.work1.cracks.modelos.aux.TypeNotification;
 import com.work1.cracks.repos.RepoEvents;
+import com.work1.cracks.repos.RepoSports;
+import com.work1.cracks.repos.RepoUser;
 import com.work1.cracks.repos.aux.RepoCategoryEvents;
 import com.work1.cracks.repos.aux.RepoCategoryGoals;
 import com.work1.cracks.repos.aux.RepoClimateSports;
 import com.work1.cracks.repos.aux.RepoCommunityGoals;
 import com.work1.cracks.repos.aux.RepoDifficultySports;
+import com.work1.cracks.repos.aux.RepoGoals;
 import com.work1.cracks.repos.aux.RepoNameUserScore;
 import com.work1.cracks.repos.aux.RepoRoleParticipants;
 import com.work1.cracks.repos.aux.RepoStatusEvents;
@@ -69,43 +75,43 @@ public class runController implements CommandLineRunner {
     @Autowired
     private RepoCommunityGoals repoCommunityGoals;
 
-
-
     @Override
     public void run(String... args) throws Exception {
 
-        String[] dificultades={"Facil","Dificil"};
-        cargar("DifficultySports",repoDifficultySports,dificultades);
+        String[] dificultades = { "Facil", "Dificil" };
+        cargar("DifficultySports", repoDifficultySports, dificultades);
 
-        String[] climas={"Verano","Otoño","Invierno","Primavera"};
-        cargar("ClimateSports",repoClimate,climas);
+        String[] climas = { "Verano", "Otoño", "Invierno", "Primavera" };
+        cargar("ClimateSports", repoClimate, climas);
 
-        String[] status={"Inscripto","Aceptado","Rechazado","Partipado","Faltado"};
-        cargar("StatusParticipants",repoStatusParticipants,status);
+        String[] status = { "Inscripto", "Aceptado", "Rechazado", "Partipado", "Faltado" };
+        cargar("StatusParticipants", repoStatusParticipants, status);
 
-        String[] role={"Creador","Participante","Espectador"};
-        cargar("RoleParticipants",repoRoleParticipants,role);
+        String[] role = { "Creador", "Participante", "Espectador" };
+        cargar("RoleParticipants", repoRoleParticipants, role);
 
         String[] statusE = { "Registrado", "En Curso", "Finalizado" };
         cargar("StatusEvents", repoStatusEvents, statusE);
 
-        String [] categorys={"Cultural","Deportivo","Social"};
-        cargar("CategoryEvents",repoCategoryEvents,categorys);
+        String[] categorys = { "Cultural", "Deportivo", "Social" };
+        cargar("CategoryEvents", repoCategoryEvents, categorys);
 
-        String [] notif={"Recibida","Leida","No Leida","Archivada"};
-        cargar("StatusNotification",repoStatusNotification,notif);
+        String[] notif = { "Recibida", "Leida", "No Leida", "Archivada" };
+        cargar("StatusNotification", repoStatusNotification, notif);
 
-        String[] typeNot={"Recordatorio","Aceptación","Calificación","General","Tips","Faqs"};
-        cargar("TypeNotification",repoTypeNotification,typeNot);
+        String[] typeNot = { "Recordatorio", "Aceptación", "Calificación", "General", "Tips", "Faqs" };
+        cargar("TypeNotification", repoTypeNotification, typeNot);
 
-        String[] nameUserS={"Puntualidad","Participacion","Compañerismo"};
-        cargar("NameUserScore",repoNameUserScore,nameUserS);
+        String[] nameUserS = { "Puntualidad", "Participacion", "Compañerismo" };
+        cargar("NameUserScore", repoNameUserScore, nameUserS);
 
-        String[] categoryG={"Categoria1","Categoria2"};
-        cargar("CategoryGoals",repoCategoryGoals,categoryG);
+        String[] categoryG = { "Categoria1", "Categoria2" };
+        cargar("CategoryGoals", repoCategoryGoals, categoryG);
 
-        String[] communityGoals={"Personal","Social","Grupo1"};
-        cargar("CommunityGoals",repoCommunityGoals,communityGoals);
+        String[] communityGoals = { "Personal", "Social", "Grupo1" };
+        cargar("CommunityGoals", repoCommunityGoals, communityGoals);
+
+        cargaABorrar();
 
     }
 
@@ -120,7 +126,48 @@ public class runController implements CommandLineRunner {
                 repo.save(obj);
             }
         } catch (Exception e) {
-            System.out.println("\nLos datos iniciales ya estan cargados para " + tabla );
+            System.out.println("\nLos datos iniciales ya estan cargados para " + tabla);
         }
+    }
+
+    @Autowired
+    private RepoEvents re;
+
+    @Autowired
+    private RepoUser ru;
+
+    @Autowired
+    private RepoGoals rg;
+
+    @Autowired
+    private RepoSports rs;
+
+    private void cargaABorrar() {
+        // Events e = new Events();
+        // e.setTitle("Juntarnos a correr");
+        // re.save(e);
+
+        // User u = new User();
+        // u.setName("Pepe");
+        // ru.save(u);
+
+        // Goals g=new Goals();
+        // g.setTitle("Adelgazar");
+        // rg.save(g);
+
+        // Goals g2=new Goals();
+        // g2.setTitle("Engordar");
+        // rg.save(g2);
+
+        Sports s=new Sports();
+        s.setTitle("futbol");
+        rs.save(s);
+
+        Sports s2=new Sports();
+        s2.setTitle("Rugby");
+        rs.save(s2);
+
+
+
     }
 }
