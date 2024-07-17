@@ -32,6 +32,17 @@ public class InterestsController {
         query.setParameter("id", id);
         return new ResponseEntity<>(query.getResultList(), HttpStatus.OK);
     }
+
+    @GetMapping("/pullEventActivities/{id}")
+    public ResponseEntity<List<UserActivitiesDto>> pullEventActivities(@PathVariable Long id) {
+         
+        String jpql = "SELECT new com.work1.cracks.dtos.UserActivitiesDto(i.id, :id,i.goal_sport_interest.title) FROM Interest i WHERE TYPE(i.owner) = InterestEvent AND i.owner.event.id=:id";
+        TypedQuery<UserActivitiesDto> query = entityManager.createQuery(jpql, UserActivitiesDto.class);
+        query.setParameter("id", id);
+        return new ResponseEntity<>(query.getResultList(), HttpStatus.OK);
+    }
+
+
     @GetMapping("/userActivities/{id}")
     public ResponseEntity<List<String>> goals(@PathVariable Long id) {
         String jpql = "SELECT i.goal_sport_interest.title FROM Interest i WHERE TYPE(i.owner) = InterestUser AND TYPE(i.goal_sport_interest)=Goals AND i.owner.user.id=:id";
