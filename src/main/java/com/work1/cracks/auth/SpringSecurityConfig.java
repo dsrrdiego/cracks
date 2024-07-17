@@ -53,6 +53,9 @@ public class SpringSecurityConfig {
                 .authorizeHttpRequests((authorize) -> {
                     authorize.requestMatchers("/monitor.html","/cracks.html").permitAll();
                     authorize.requestMatchers("/swagger-ui/**","/v3/api-docs/**").permitAll();
+                    //Guarda, despues cambiar a no - autorizado!!!
+                   authorize.requestMatchers(HttpMethod.GET, "/userActivities/**","/userSports/**").permitAll();
+
                     // websecurity.ignoring().antMatchers("/swagger-ui/**", "/v3/api-docs/**");
                     //                    authorize.requestMatchers(HttpMethod.POST, "/api/**").hasRole("ADMIN");
 //                    authorize.requestMatchers(HttpMethod.PUT, "/api/**").hasRole("ADMIN");

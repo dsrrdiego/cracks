@@ -6,6 +6,7 @@ import java.time.LocalDate;
 
 import com.work1.cracks.modelos.aux.Coordenadas;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,6 +18,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name="Users")
+@Schema(description = "Usuario del sistema")
 public class User {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -28,6 +30,7 @@ public class User {
     @Column
     private String about;
 
+    @Schema(description = "Fecha de Nacimiento del usuario")
     @Column
     private LocalDate birthDate;
 

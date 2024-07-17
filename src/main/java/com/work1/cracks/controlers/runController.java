@@ -9,12 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import com.work1.cracks.modelos.Events;
 import com.work1.cracks.modelos.aux.ClimateSports;
 import com.work1.cracks.modelos.aux.DifficultySports;
 import com.work1.cracks.modelos.aux.RoleParticipants;
 import com.work1.cracks.modelos.aux.StatusEvents;
 import com.work1.cracks.modelos.aux.StatusParticipants;
 import com.work1.cracks.modelos.aux.TypeNotification;
+import com.work1.cracks.repos.RepoEvents;
 import com.work1.cracks.repos.aux.RepoCategoryEvents;
 import com.work1.cracks.repos.aux.RepoCategoryGoals;
 import com.work1.cracks.repos.aux.RepoClimateSports;
@@ -67,6 +69,8 @@ public class runController implements CommandLineRunner {
     @Autowired
     private RepoCommunityGoals repoCommunityGoals;
 
+
+
     @Override
     public void run(String... args) throws Exception {
 
@@ -102,7 +106,6 @@ public class runController implements CommandLineRunner {
 
         String[] communityGoals={"Personal","Social","Grupo1"};
         cargar("CommunityGoals",repoCommunityGoals,communityGoals);
-
 
     }
 

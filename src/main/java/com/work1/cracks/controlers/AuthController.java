@@ -79,6 +79,7 @@ public class AuthController {
     public ResponseEntity<String> registro(@RequestParam("name") String name,
             @RequestParam("psw") MultipartFile clave) {
 
+
         if (repoUser.existsByName(name)) {
             return new ResponseEntity<String>("El usuario ya existe", HttpStatus.CONFLICT);
         }

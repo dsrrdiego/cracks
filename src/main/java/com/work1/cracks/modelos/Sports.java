@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @EqualsAndHashCode(callSuper = true)
 
-public class Sports extends Goals{
+public class Sports extends GoalsSports{
     // @Id
     // @GeneratedValue(strategy = GenerationType.IDENTITY)
     // private Long id;

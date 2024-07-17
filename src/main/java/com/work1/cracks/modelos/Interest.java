@@ -11,6 +11,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import com.work1.cracks.modelos.GoalsSports;
 @Setter
 @Getter
 @NoArgsConstructor
@@ -28,7 +29,7 @@ public class Interest {
     private OwnerInterest owner;
 
     @ManyToOne
-    private Goals goals_sport_interest;
+    private GoalsSports goal_sport_interest;
 
     @Column
     private LocalDateTime creationData;
