@@ -4,6 +4,8 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.work1.cracks.modelos.aux.CategoryEvents;
 import com.work1.cracks.modelos.aux.Coordenadas;
@@ -68,5 +70,14 @@ public class Events {
 
     @Column
     private LocalDate registerDate;
+
+
+    @Transient
+    private ArrayList<String> goals;
+
+    @Transient
+    private ArrayList<String> sports;
+
+   
 
 }

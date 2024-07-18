@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.work1.cracks.dtos.PullGoalsDto;
 import com.work1.cracks.dtos.UserActivitiesDto;
 import com.work1.cracks.modelos.Interest;
 import com.work1.cracks.repos.RepoInterest;
@@ -43,35 +44,35 @@ public class InterestsController {
     }
 
 
-    @GetMapping("/userActivities/{id}")
-    public ResponseEntity<List<String>> goals(@PathVariable Long id) {
-        String jpql = "SELECT i.goal_sport_interest.title FROM Interest i WHERE TYPE(i.owner) = InterestUser AND TYPE(i.goal_sport_interest)=Goals AND i.owner.user.id=:id";
-        TypedQuery<String> query = entityManager.createQuery(jpql, String.class);
+    @GetMapping("/pullGoals/{id}")
+    public ResponseEntity<List<PullGoalsDto>> goals(@PathVariable Long id) {
+        String jpql = "SELECT new com.work1.cracks.dtos.PullGoalsDto(i.id,i.goal_sport_interest.title) FROM Interest i WHERE TYPE(i.owner) = InterestUser AND TYPE(i.goal_sport_interest)=Goals AND i.owner.user.id=:id";
+        TypedQuery<PullGoalsDto> query = entityManager.createQuery(jpql, PullGoalsDto.class);
+        query.setParameter("id", id);
+        return new ResponseEntity<>(query.getResultList(), HttpStatus.OK);
+    }
+    @GetMapping("/pullSports/{id}")
+    public ResponseEntity<List<PullGoalsDto>> sports(@PathVariable Long id) {
+        String jpql = "SELECT new com.work1.cracks.dtos.PullGoalsDto(i.id,i.goal_sport_interest.title) FROM Interest i WHERE TYPE(i.owner) = InterestUser AND TYPE(i.goal_sport_interest)=Sports AND i.owner.user.id=:id";
+        TypedQuery<PullGoalsDto> query = entityManager.createQuery(jpql, PullGoalsDto.class);
         query.setParameter("id", id);
         return new ResponseEntity<>(query.getResultList(), HttpStatus.OK);
     }
 
-    @GetMapping("/userSports/{id}")
-    public ResponseEntity<List<String>> sports(@PathVariable Long id) {
-        String jpql = "SELECT i.goal_sport_interest.title FROM Interest i WHERE TYPE(i.owner) = InterestUser AND TYPE(i.goal_sport_interest)=Sports AND i.owner.user.id=:id";
-        TypedQuery<String> query = entityManager.createQuery(jpql, String.class);
-        query.setParameter("id", id);
-        return new ResponseEntity<>(query.getResultList(), HttpStatus.OK);
-    }
-    @GetMapping("/eventActivities/{id}")
-    public ResponseEntity<List<String>> eventgoals(@PathVariable Long id) {
-        String jpql = "SELECT i.goal_sport_interest.title FROM Interest i WHERE TYPE(i.owner) = InterestEvent AND TYPE(i.goal_sport_interest)=Goals AND i.owner.event.id=:id";
-        TypedQuery<String> query = entityManager.createQuery(jpql, String.class);
-        query.setParameter("id", id);
-        return new ResponseEntity<>(query.getResultList(), HttpStatus.OK);
-    }
+    // @GetMapping("/eventActivities/{id}")
+    // public ResponseEntity<List<String>> eventgoals(@PathVariable Long id) {
+    //     String jpql = "SELECT i.goal_sport_interest.title FROM Interest i WHERE TYPE(i.owner) = InterestEvent AND TYPE(i.goal_sport_interest)=Goals AND i.owner.event.id=:id";
+    //     TypedQuery<String> query = entityManager.createQuery(jpql, String.class);
+    //     query.setParameter("id", id);
+    //     return new ResponseEntity<>(query.getResultList(), HttpStatus.OK);
+    // }
 
-    @GetMapping("/eventSports/{id}")
-    public ResponseEntity<List<String>> eventSports(@PathVariable Long id) {
-        String jpql = "SELECT i.goal_sport_interest.title FROM Interest i WHERE TYPE(i.owner) = InterestEvent AND TYPE(i.goal_sport_interest)=Sports AND i.owner.event.id=:id";
-        TypedQuery<String> query = entityManager.createQuery(jpql, String.class);
-        query.setParameter("id", id);
-        return new ResponseEntity<>(query.getResultList(), HttpStatus.OK);
-    }
+    // @GetMapping("/eventSports/{id}")
+    // public ResponseEntity<List<String>> eventSports(@PathVariable Long id) {
+    //     String jpql = "SELECT i.goal_sport_interest.title FROM Interest i WHERE TYPE(i.owner) = InterestEvent AND TYPE(i.goal_sport_interest)=Sports AND i.owner.event.id=:id";
+    //     TypedQuery<String> query = entityManager.createQuery(jpql, String.class);
+    //     query.setParameter("id", id);
+    //     return new ResponseEntity<>(query.getResultList(), HttpStatus.OK);
+    // }
 
 }

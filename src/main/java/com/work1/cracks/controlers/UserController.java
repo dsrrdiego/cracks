@@ -26,7 +26,7 @@ public class UserController {
     @ApiResponse(responseCode = "200", description = "Usuario encontrado"),
     @ApiResponse(responseCode = "404", description = "Usuario no encontrado")
 })
-    @GetMapping("/useractivities/{id}")
+    @GetMapping("/pullUserInformation/{id}")
     public ResponseEntity<Optional<User>> user(@PathVariable Long id){
         Optional<User> u= repoUser.findById(id);
 

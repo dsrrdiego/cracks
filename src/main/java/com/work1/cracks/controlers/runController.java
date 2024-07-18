@@ -3,6 +3,7 @@ package com.work1.cracks.controlers;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -143,30 +144,38 @@ public class runController implements CommandLineRunner {
     private RepoSports rs;
 
     private void cargaABorrar() {
-        // Events e = new Events();
-        // e.setTitle("Juntarnos a correr");
-        // re.save(e);
+        try{
+        Events e = new Events();
+        e.setTitle("Juntarnos a correr");
+        LocalDateTime fecha = LocalDateTime.of(2025, 1, 1, 15, 0);
+        e.setDateInit(fecha);
+        re.save(e);
+
+        Events e2 = new Events();
+        e2.setTitle("Nadar");
+        e2.setDateInit(fecha);
+        re.save(e2);
 
         // User u = new User();
         // u.setName("Pepe");
         // ru.save(u);
 
-        // Goals g=new Goals();
-        // g.setTitle("Adelgazar");
-        // rg.save(g);
+        Goals g=new Goals();
+        g.setTitle("Adelgazar");
+        rg.save(g);
 
-        // Goals g2=new Goals();
-        // g2.setTitle("Engordar");
-        // rg.save(g2);
+        Goals g2=new Goals();
+        g2.setTitle("Engordar");
+        rg.save(g2);
 
-        // Sports s=new Sports();
-        // s.setTitle("futbol");
-        // rs.save(s);
+        Sports s=new Sports();
+        s.setTitle("futbol");
+        rs.save(s);
 
-        // Sports s2=new Sports();
-        // s2.setTitle("Rugby");
-        // rs.save(s2);
-
+        Sports s2=new Sports();
+        s2.setTitle("Rugby");
+        rs.save(s2);
+        }catch (Exception e){}
 
 
     }

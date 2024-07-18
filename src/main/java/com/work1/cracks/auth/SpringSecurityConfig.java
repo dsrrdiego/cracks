@@ -54,7 +54,8 @@ public class SpringSecurityConfig {
                     authorize.requestMatchers("/monitor.html","/cracks.html").permitAll();
                     authorize.requestMatchers("/swagger-ui/**","/v3/api-docs/**").permitAll();
                     //Guarda, despues cambiar a no - autorizado!!!
-                   authorize.requestMatchers(HttpMethod.GET, "/pullUserActivities/**","/pullEventActivities/**","/userActivities/**","/userSports/**","/eventActivities/**","/eventSports/**").permitAll();
+                   authorize.requestMatchers(HttpMethod.GET, "/pullUserActivities/**","/pullEventActivities/**","/pullGoals/**","/pullSports/**").permitAll();
+                   authorize.requestMatchers(HttpMethod.GET, "/pullUserInformation/**","/pullSession/**","/pullEvents/**").permitAll();
 
                     // websecurity.ignoring().antMatchers("/swagger-ui/**", "/v3/api-docs/**");
                     //                    authorize.requestMatchers(HttpMethod.POST, "/api/**").hasRole("ADMIN");
