@@ -57,8 +57,11 @@ public class SpringSecurityConfig {
                     authorize.requestMatchers(HttpMethod.GET, "/pullUserActivities/**","/pullEventActivities/**","/pullGoals/**","/pullSports/**").permitAll();
                    authorize.requestMatchers(HttpMethod.GET, "/pullUserInformation/**","/pullSession/**").permitAll();
                    authorize.requestMatchers(HttpMethod.GET, "/pullEvents/**","/pullPassedEventsByUser/**","/pullEventById/**").permitAll();
+                   
                    authorize.requestMatchers("/postEvent","/eventPicture").permitAll();
-
+                   authorize.requestMatchers(HttpMethod.GET, "/eventPicture/**").permitAll();
+                   
+                   authorize.requestMatchers(HttpMethod.GET, "/pullParticipantsEventById/**").permitAll();
                     // websecurity.ignoring().antMatchers("/swagger-ui/**", "/v3/api-docs/**");
                     //                    authorize.requestMatchers(HttpMethod.POST, "/api/**").hasRole("ADMIN");
 //                    authorize.requestMatchers(HttpMethod.PUT, "/api/**").hasRole("ADMIN");

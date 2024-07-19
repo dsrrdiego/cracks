@@ -2,7 +2,10 @@ package com.work1.cracks.controlers;
 
 import java.util.List;
 
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,6 +30,11 @@ public class ParticipantsController {
         }
 
         return lista;
+    }
+
+    @GetMapping("/pullParticipantsEventById/{id}")
+    public ResponseEntity<List<Participants>> pullParticipantsById(@PathVariable Long id){
+        return new ResponseEntity<List<Participants>>(repoParticipants.findByUserId(id),HttpStatus.OK);
     }
 
 }
