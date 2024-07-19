@@ -18,6 +18,7 @@ import com.work1.cracks.dtos.PullGoalsDto;
 import com.work1.cracks.modelos.Events;
 import com.work1.cracks.repos.RepoEvents;
 import com.work1.cracks.repos.RepoInterest;
+import com.work1.cracks.servicios.GoalSportsService;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -28,36 +29,32 @@ public class EventsController {
     @Autowired
     private RepoEvents repoEvents;
 
-    @Autowired
-    private RepoInterest repoInterest;
-
     @PersistenceContext
     private EntityManager entityManager;
 
-    @GetMapping("/pullEvents/{filaIni}/{cantidad}")
-    public ResponseEntity<ArrayList<Events>> pullEvents(@PathVariable int filaIni, @PathVariable int cantidad) {
-        ArrayList<Events> lista = (ArrayList<Events>) repoEvents.findPage(cantidad, filaIni - 1);
-        for (Events e : lista) {
-            System.out.println(e.getTitle());
-            // ArrayList<String> goals=repoInterest.
-            String jpql = "SELECT i.goal_sport_interest.title FROM Interest i WHERE TYPE(i.owner) = InterestEvent AND TYPE(i.goal_sport_interest)=Goals AND i.owner.event.id=:id";
-            TypedQuery<String> query = entityManager.createQuery(jpql, String.class);
-            query.setParameter("id", e.getId());
-            ArrayList<String> goals = (ArrayList<String>) query.getResultList();
-            e.setGoals(goals);
+    @Autowired
+    private GoalSportsService goalSportsService;
 
-            jpql = "SELECT i.goal_sport_interest.title FROM Interest i WHERE TYPE(i.owner) = InterestEvent AND TYPE(i.goal_sport_interest)=Sports AND i.owner.event.id=:id";
-            query = entityManager.createQuery(jpql, String.class);
-            query.setParameter("id", e.getId());
-            ArrayList<String> sports = (ArrayList<String>) query.getResultList();
-            e.setSports(sports);
+    @GetMapping("/pullEvents/{pagina}/{cantidad}")
+    public ResponseEntity<ArrayList<Events>> pullEvents(@PathVariable int cantidad, @PathVariable int pagina) {
+        PageRequest page=PageRequest.of(pagina,cantidad);
+        ArrayList<Events> lista = (ArrayList<Events>) repoEvents.findPage(page);
+        for (Events e : lista) {
+
+            e.setGoals(goalSportsService.getEventsGoals(e.getId()));
+
+            e.setSports(goalSportsService.getEventsSports(e.getId()));
         }
         return new ResponseEntity<ArrayList<Events>>(lista, HttpStatus.OK);
     }
 
     @GetMapping("/pullEventById/{id}")
-    public ResponseEntity<Optional<Events>> events(@PathVariable Long id) {
-        return new ResponseEntity<Optional<Events>>(repoEvents.findById(id), HttpStatus.OK);
+    public ResponseEntity<Events> events(@PathVariable Long id) {
+        Events e = repoEvents.fiXIde(id);
+        e.setGoals(goalSportsService.getEventsGoals(id));
+        e.setSports(goalSportsService.getEventsSports(id));
+
+        return new ResponseEntity<Events>(e, HttpStatus.OK);
     }
 
 }
