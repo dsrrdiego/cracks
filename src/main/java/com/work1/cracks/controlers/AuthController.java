@@ -32,12 +32,9 @@ import com.work1.cracks.interfaces.TypeLogin;
 import com.work1.cracks.modelos.User;
 import com.work1.cracks.modelos.Cities;
 import com.work1.cracks.modelos.Session;
-import com.work1.cracks.modelos.Sports;
 import com.work1.cracks.repos.RepoCities;
 import com.work1.cracks.repos.RepoSession;
-import com.work1.cracks.repos.RepoSports;
 import com.work1.cracks.repos.RepoUser;
-import com.work1.cracks.servicios.ConsultaGeneral;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

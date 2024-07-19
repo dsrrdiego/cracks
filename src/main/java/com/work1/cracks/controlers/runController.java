@@ -167,12 +167,12 @@ public class runController implements CommandLineRunner {
             e2.setDateInit(fecha2);
             re.save(e2);
 
-            for (int i=3;i<10;i++){
-                Events a=new Events();
-                a.setTitle("e"+i);
-                a.setDateInit(fecha);
-                re.save(a);
-            }
+            // for (int i=3;i<10;i++){
+            //     Events a=new Events();
+            //     a.setTitle("e"+i);
+            //     a.setDateInit(fecha);
+            //     re.save(a);
+            // }
 
             User u = new User();
             u.setName("Pepe");

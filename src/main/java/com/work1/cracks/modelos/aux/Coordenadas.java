@@ -26,4 +26,17 @@ public class Coordenadas {
 
     @Column
     private float longitud;
+
+    @Column
+    private String description;
+
+    @Column
+    private String address;
+
+    public Coordenadas(float latitud,float longitud,String description, String address){
+        this.latitud=latitud;
+        this.longitud=longitud;
+        this.description=description;
+        this.address=address;
+    }
 }

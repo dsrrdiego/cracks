@@ -57,6 +57,7 @@ public class SpringSecurityConfig {
                     authorize.requestMatchers(HttpMethod.GET, "/pullUserActivities/**","/pullEventActivities/**","/pullGoals/**","/pullSports/**").permitAll();
                    authorize.requestMatchers(HttpMethod.GET, "/pullUserInformation/**","/pullSession/**").permitAll();
                    authorize.requestMatchers(HttpMethod.GET, "/pullEvents/**","/pullPassedEventsByUser/**","/pullEventById/**").permitAll();
+                   authorize.requestMatchers("/postEvent","/eventPicture").permitAll();
 
                     // websecurity.ignoring().antMatchers("/swagger-ui/**", "/v3/api-docs/**");
                     //                    authorize.requestMatchers(HttpMethod.POST, "/api/**").hasRole("ADMIN");
@@ -64,7 +65,6 @@ public class SpringSecurityConfig {
 //                    authorize.requestMatchers(HttpMethod.DELETE, "/api/**").hasRole("ADMIN");
 //                    authorize.requestMatchers(HttpMethod.GET, "/api/**").hasAnyRole("ADMIN", "USER");
 //                    authorize.requestMatchers(HttpMethod.PATCH, "/api/**").hasAnyRole("ADMIN", "USER");
-                   authorize.requestMatchers(HttpMethod.GET, "/eventos","/hola").hasAnyRole("ADMIN","USER");
                 //    authorize.requestMatchers(HttpMethod.GET, "/registro").permitAll();
                     authorize.requestMatchers("/login","/login2","/registro").permitAll();
                     authorize.requestMatchers("/h2-console/**").permitAll();
