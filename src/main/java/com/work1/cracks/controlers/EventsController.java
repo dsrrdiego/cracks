@@ -43,32 +43,21 @@ public class EventsController {
             String jpql = "SELECT i.goal_sport_interest.title FROM Interest i WHERE TYPE(i.owner) = InterestEvent AND TYPE(i.goal_sport_interest)=Goals AND i.owner.event.id=:id";
             TypedQuery<String> query = entityManager.createQuery(jpql, String.class);
             query.setParameter("id", e.getId());
-            ArrayList<String> goals=(ArrayList<String>) query.getResultList();
+            ArrayList<String> goals = (ArrayList<String>) query.getResultList();
             e.setGoals(goals);
 
             jpql = "SELECT i.goal_sport_interest.title FROM Interest i WHERE TYPE(i.owner) = InterestEvent AND TYPE(i.goal_sport_interest)=Sports AND i.owner.event.id=:id";
             query = entityManager.createQuery(jpql, String.class);
             query.setParameter("id", e.getId());
-            ArrayList<String> sports=(ArrayList<String>) query.getResultList();
+            ArrayList<String> sports = (ArrayList<String>) query.getResultList();
             e.setSports(sports);
         }
         return new ResponseEntity<ArrayList<Events>>(lista, HttpStatus.OK);
     }
 
-   
-
-    // @GetMapping("/event/{id}")
-    // public ResponseEntity<Optional<Events>> events(@PathVariable Long id) {
-
-    // Optional<Events> e = repoEvents.findById(id);
-    // return new ResponseEntity<Optional<Events>>(e, HttpStatus.OK);
-
-    // }
-
-    // @GetMapping("/event/{pageInit}/{cantidad}")
-    // public List<Events> eventPaginado(@PathVariable int pageInit, @PathVariable
-    // int cantidad) {
-    // return repoEvents.findPage(cantidad,pageInit-1);
-    // }
+    @GetMapping("/pullEventById/{id}")
+    public ResponseEntity<Optional<Events>> events(@PathVariable Long id) {
+        return new ResponseEntity<Optional<Events>>(repoEvents.findById(id), HttpStatus.OK);
+    }
 
 }

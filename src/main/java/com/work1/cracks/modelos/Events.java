@@ -74,11 +74,9 @@ public class Events {
 
 
     @Transient
-    @JsonIgnore
     private ArrayList<String> goals;
 
     @Transient
-    @JsonIgnore
     private ArrayList<String> sports;
 
    
