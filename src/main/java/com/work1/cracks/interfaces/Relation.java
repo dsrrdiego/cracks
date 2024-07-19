@@ -1,5 +1,5 @@
-package com.work1.cracks.interfaces;
+// package com.work1.cracks.interfaces;
 
-public enum Relation {
-    INCIPIENTE, LARGA_DATA, OCASIONAL
-}
+// public enum Relation {
+//     INCIPIENTE, LARGA_DATA, OCASIONAL
+// }

@@ -55,6 +55,8 @@ public class EventsController {
         return new ResponseEntity<ArrayList<Events>>(lista, HttpStatus.OK);
     }
 
+   
+
     // @GetMapping("/event/{id}")
     // public ResponseEntity<Optional<Events>> events(@PathVariable Long id) {
 

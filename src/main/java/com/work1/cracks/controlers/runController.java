@@ -153,12 +153,13 @@ public class runController implements CommandLineRunner {
 
         Events e2 = new Events();
         e2.setTitle("Nadar");
-        e2.setDateInit(fecha);
+        LocalDateTime fecha2 = LocalDateTime.of(2020, 1, 1, 15, 0);
+        e2.setDateInit(fecha2);
         re.save(e2);
 
-        // User u = new User();
-        // u.setName("Pepe");
-        // ru.save(u);
+        User u = new User();
+        u.setName("Pepe");
+        ru.save(u);
 
         Goals g=new Goals();
         g.setTitle("Adelgazar");
@@ -175,6 +176,8 @@ public class runController implements CommandLineRunner {
         Sports s2=new Sports();
         s2.setTitle("Rugby");
         rs.save(s2);
+
+        
         }catch (Exception e){}
 
 

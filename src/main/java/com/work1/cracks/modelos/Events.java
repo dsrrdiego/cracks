@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.work1.cracks.modelos.aux.CategoryEvents;
 import com.work1.cracks.modelos.aux.Coordenadas;
 import com.work1.cracks.modelos.aux.StatusEvents;
@@ -73,9 +74,11 @@ public class Events {
 
 
     @Transient
+    @JsonIgnore
     private ArrayList<String> goals;
 
     @Transient
+    @JsonIgnore
     private ArrayList<String> sports;
 
    

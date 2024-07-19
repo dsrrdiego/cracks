@@ -2,10 +2,6 @@ package com.work1.cracks.modelos;
 
 import lombok.NoArgsConstructor;
 
-
-import com.work1.cracks.interfaces.Relation;
-
-
 import com.work1.cracks.modelos.aux.RoleParticipants;
 import com.work1.cracks.modelos.aux.StatusParticipants;
 
@@ -38,16 +34,18 @@ public class Participants {
     @ManyToOne
     private RoleParticipants role;
 
-    private String linked;
 
-    private boolean attended;
+    // no van mas?
+    // private String linked;
 
-    @Enumerated(EnumType.STRING)
-    private Relation relation;
+    // private boolean attended;
 
-    private boolean achievementLevel;
+    // @Enumerated(EnumType.STRING)
+    // private Relation relation;
 
-    private float commitementLevel;
+    // private boolean achievementLevel;
+
+    // private float commitementLevel;
 
 
 }
