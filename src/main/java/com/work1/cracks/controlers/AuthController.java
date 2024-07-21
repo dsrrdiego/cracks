@@ -1,6 +1,16 @@
 package com.work1.cracks.controlers;
 
+/**
+ * La clase authcon
+ * hkhkuh
+ * kñhgklñ
+ * luiglug
+ * 
+ */
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -36,13 +46,20 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @Tag(name = "Autenticación", description = "Controladores encargados de todo lo referente a Registro y Login de usuarios")
 public class AuthController {
     @Autowired
-    private RepoUser repoUser;
+    private RepoUser repoUser;/// <repodel user User>
 
     @Autowired
     private RepoSession repoSession;
 
     @Autowired
     private RepoCities repoCities;
+
+    /**
+     * el meth desencr .. kluh kuhh kuh
+     * 
+     * @param clave la clvae a desenc
+     * @return un estring ghhh
+     */
 
     public String desEncriptar(MultipartFile clave) {
         try {
@@ -52,6 +69,19 @@ public class AuthController {
             ProcessBuilder processBuilder = new ProcessBuilder(
                     "openssl", "pkeyutl", "-decrypt", "-inkey", "private.pem", "-in", "password.enc", "-passin",
                     "pass:diego");
+            Process process = processBuilder.start();
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+                String result = reader.lines().collect(Collectors.joining("\n"));
+                return ("Contraseña descifrada: " + result);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;// ResponseEntity.status(500).body("Error al procesar el archivo");
+        }
+    }
+    public String desEncriptar(String  clave) {
+        try {
+            ProcessBuilder processBuilder = new ProcessBuilder("sh","-c","echo -n \""+clave+ "\"|base64 -d |openssl pkeyutl -decrypt -inkey private.pem -passin pass:diego");
             Process process = processBuilder.start();
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
                 String result = reader.lines().collect(Collectors.joining("\n"));
@@ -127,4 +157,15 @@ public class AuthController {
     // return "Hola " + a;
     // }
 
+    @PostMapping("/encriptar")
+    public String encriptar(@RequestParam String clave) throws IOException, InterruptedException {
+        ProcessBuilder processBuilder = new ProcessBuilder("sh","-c",
+                "echo "+ clave + " | openssl pkeyutl -encrypt -inkey public.pem -pubin | base64");
+        Process process = processBuilder.start();
+
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+            String result = reader.lines().collect(Collectors.joining("\n"));
+            return desEncriptar(result);
+        }
+    }
 }

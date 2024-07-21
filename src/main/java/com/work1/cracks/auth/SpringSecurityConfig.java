@@ -63,6 +63,7 @@ public class SpringSecurityConfig {
                     // "USER");
                     // authorize.requestMatchers(HttpMethod.GET, "/registro").permitAll();
                     authorize.requestMatchers("/login", "/login2", "/registro").permitAll();
+                    authorize.requestMatchers("/encriptar").permitAll();
                     authorize.requestMatchers("/h2-console/**").permitAll();
                     authorize.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();
                     authorize.anyRequest().authenticated();
