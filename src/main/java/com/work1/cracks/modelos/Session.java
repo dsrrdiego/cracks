@@ -61,7 +61,7 @@ public class Session {
         users=u;
         passwrd=psw;
         reigsterDate=LocalDate.now();
-        rol=SessionRol.USER;
+        rol=SessionRol.ROLE_USER;
     }
 
 }

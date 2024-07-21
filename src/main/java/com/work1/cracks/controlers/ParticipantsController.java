@@ -2,7 +2,6 @@ package com.work1.cracks.controlers;
 
 import java.util.List;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -22,6 +21,12 @@ import com.work1.cracks.repos.aux.RepoRoleParticipants;
 import com.work1.cracks.repos.aux.RepoStatusParticipants;
 import com.work1.cracks.servicios.GoalSportsService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+@Tag(name = "Participantes",description = "Controladores de lo referente a la participación de los usuarios en los eventos")
 @RestController
 public class ParticipantsController {
     @Autowired
@@ -37,8 +42,11 @@ public class ParticipantsController {
     @Autowired
     RepoRoleParticipants repoRole;
 
+    @Operation(summary = "Sobre eventos finalizados",description = "Lista los eventos finalizados de los cuales estuvo vinculado.")
+    @ApiResponse(responseCode = "200", description = "Se pudo entregar el listado")
+    @ApiResponse(responseCode = "401", description = "No esta autorizado")
     @GetMapping("/pullPassedEventsByUser/{id}")
-    public List<Participants> passedEventByUser(@PathVariable Long id) {
+    public List<Participants> passedEventByUser( @PathVariable Long id) {
         List<Participants> lista = repoParticipants.findPasadosById(id);
         for (Participants p : lista) {
             p.getEvent().setGoals(goalSportsService.getEventsGoals(p.getEvent().getId()));

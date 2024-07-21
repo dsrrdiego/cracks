@@ -174,9 +174,9 @@ public class runController implements CommandLineRunner {
             //     re.save(a);
             // }
 
-            User u = new User();
-            u.setName("Pepe");
-            ru.save(u);
+            // User u = new User();
+            // u.setName("Pepe");
+            // ru.save(u);
 
             Goals g = new Goals();
             g.setTitle("Adelgazar");

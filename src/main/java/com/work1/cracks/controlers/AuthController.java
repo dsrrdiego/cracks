@@ -41,7 +41,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
-@Tag(name = "Controlador de Autenticación", description = "Encargado de todo lo referente Registro y Login")
+@Tag(name = "Autenticación", description = "Controladores encargados de todo lo referente a Registro y Login de usuarios")
 public class AuthController {
     @Autowired
     private RepoUser repoUser;
@@ -76,7 +76,6 @@ public class AuthController {
     public ResponseEntity<String> registro(@RequestParam("name") String name,
             @RequestParam("psw") MultipartFile clave) {
 
-
         if (repoUser.existsByName(name)) {
             return new ResponseEntity<String>("El usuario ya existe", HttpStatus.CONFLICT);
         }
@@ -109,7 +108,6 @@ public class AuthController {
     @Autowired
     private AuthenticationManager authManager;
 
-
     @Operation(summary = "Logueo de Usuario", description = "Punto de entrada para el Usuario, aqui recibirá un Token para tener acceso a la API")
     @PostMapping(value = "/login", consumes = "multipart/form-data")
     public ResponseEntity<String> login(@RequestParam("name") String name, @RequestParam("psw") MultipartFile clave) {
@@ -122,18 +120,19 @@ public class AuthController {
 
     }
 
-    @Autowired
-    JwtAuthenticationFilter jwtFiltro;
+    // @Autowired
+    // JwtAuthenticationFilter jwtFiltro;
 
-    @Operation(summary = "Punto de prueba de acceso ", description = "Ingresar con Token")
-    @GetMapping("/hola")
-    public String hola(HttpServletRequest request) {
+    // @Operation(summary = "Punto de prueba de acceso ", description = "Ingresar
+    // con Token")
+    // @GetMapping("/hola")
+    // public String hola(HttpServletRequest request) {
 
-        String token = jwtFiltro.getTokenFromRequest(request);
+    // String token = jwtFiltro.getTokenFromRequest(request);
 
-        String a = generarToken.getUsername(token);
+    // String a = generarToken.getUsername(token);
 
-        return "Hola " + a;
-    }
+    // return "Hola " + a;
+    // }
 
 }

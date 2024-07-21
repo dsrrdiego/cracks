@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.work1.cracks.interfaces.SessionRol;
 import com.work1.cracks.modelos.Session;
 import com.work1.cracks.modelos.User;
 import com.work1.cracks.repos.RepoSession;
@@ -40,13 +41,18 @@ public class CustomUserDetailsService implements UserDetailsService {
         Set<GrantedAuthority> authorities = new HashSet<>();
 
         // Añadir manualmente las autoridades deseadas
-        if (nombre.equals("diego")){
+         SessionRol role = session.getRol();
+         String rolee=role.toString();
+         System.out.println("\n\n"+rolee+"\n\n");
 
-                authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-        }else{
+        // if (nombre.equals("diego")){
+
+                // authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+                authorities.add(new SimpleGrantedAuthority(rolee));
+        // }else{
                 
-                authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-        }
+                // authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        // }
 
         return new org.springframework.security.core.userdetails.User(
                 nombre,

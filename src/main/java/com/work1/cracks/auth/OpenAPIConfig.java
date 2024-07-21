@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @OpenAPIDefinition(
-    info = @Info(title = "Cracks API", version = "v1"),
+    info = @Info(title = "Cracks API", version = "v1", description = "API para consumo de todas las aplicaciones CRACKS"),
     security = @SecurityRequirement(name = "bearerAuth")
 )
 @SecurityScheme(

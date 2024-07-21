@@ -35,6 +35,7 @@ public class User {
     private LocalDate birthDate;
 
     @Column
+    
     private String gender;
 
     @Column

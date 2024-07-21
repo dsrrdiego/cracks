@@ -1,6 +1,5 @@
 package com.work1.cracks.auth;
 
-
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,29 +20,29 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @AllArgsConstructor
 public class SpringSecurityConfig {
 
-
     private PuntoDeEntrada authenticationEntryPoint;
 
     private JwtAuthenticationFilter authenticationFilter;
 
     @Bean
-    public static PasswordEncoder passwordEncoder(){
+    public static PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
     // @Bean
 
     // public PasswordEncoder passwordEncoder() {
-    //     return new PasswordEncoder() {
-    //         @Override
-    //         public String encode(CharSequence rawPassword) {
-    //             return rawPassword.toString(); // Devuelve la contraseña sin modificar
-    //         }
+    // return new PasswordEncoder() {
+    // @Override
+    // public String encode(CharSequence rawPassword) {
+    // return rawPassword.toString(); // Devuelve la contraseña sin modificar
+    // }
 
-    //         @Override
-    //         public boolean matches(CharSequence rawPassword, String encodedPassword) {
-    //             return rawPassword.toString().equals(encodedPassword); // Compara la contraseña sin modificar
-    //         }
-    //     };
+    // @Override
+    // public boolean matches(CharSequence rawPassword, String encodedPassword) {
+    // return rawPassword.toString().equals(encodedPassword); // Compara la
+    // contraseña sin modificar
+    // }
+    // };
     // }
 
     @Bean
@@ -51,34 +50,41 @@ public class SpringSecurityConfig {
 
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests((authorize) -> {
-                    authorize.requestMatchers("/monitor.html","/cracks.html").permitAll();
-                    authorize.requestMatchers("/swagger-ui/**","/v3/api-docs/**").permitAll();
-                    //Guarda, despues cambiar a no - autorizado!!!
-                    authorize.requestMatchers(HttpMethod.GET, "/pullUserActivities/**","/pullEventActivities/**","/pullGoals/**","/pullSports/**").permitAll();
-                   authorize.requestMatchers(HttpMethod.GET, "/pullUserInformation/**","/pullSession/**").permitAll();
-                   authorize.requestMatchers(HttpMethod.GET, "/pullEvents/**","/pullPassedEventsByUser/**","/pullEventById/**").permitAll();
-                   
-                   authorize.requestMatchers("/postEvent","/eventPicture").permitAll();
-                   authorize.requestMatchers(HttpMethod.GET, "/eventPicture/**").permitAll();
-                   
-                   authorize.requestMatchers(HttpMethod.GET, "/pullParticipantsEventById/**").permitAll();
-                   authorize.requestMatchers("/pushParticipant").permitAll();
+                    authorize.requestMatchers("/monitor.html", "/main.js","/cracks.html","/consulta").permitAll();
+                    authorize.requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll();
+
+                    // Guarda, despues cambiar a no - autorizado!!!
+                    authorize.requestMatchers(HttpMethod.GET, "/pullUserActivities/**", "/pullEventActivities/**",
+                            "/pullGoals/**", "/pullSports/**").permitAll();
+                    authorize.requestMatchers(HttpMethod.GET, "/pullUserInformation/**", "/pullSession/**").permitAll();
+                    authorize.requestMatchers(HttpMethod.GET, "/pullEvents/**", "/pullPassedEventsByUser/**",
+                            "/pullEventById/**").permitAll();//.hasAnyRole("USER","ADMIN");//
+
+                    authorize.requestMatchers("/postEvent", "/eventPicture").permitAll();
+                    authorize.requestMatchers(HttpMethod.GET, "/eventPicture/**").permitAll();
+
+                    authorize.requestMatchers(HttpMethod.GET, "/pullParticipantsEventById/**").permitAll();
+                    authorize.requestMatchers("/pushParticipant").permitAll();
+                    // authorize.requestMatchers(HttpMethod.GET, "/pullParticipantsEventById/**").hasRole("ADMIN");
+                    // authorize.requestMatchers("/pushParticipant").hasRole("USER");
 
                     // websecurity.ignoring().antMatchers("/swagger-ui/**", "/v3/api-docs/**");
-                    //                    authorize.requestMatchers(HttpMethod.POST, "/api/**").hasRole("ADMIN");
-//                    authorize.requestMatchers(HttpMethod.PUT, "/api/**").hasRole("ADMIN");
-//                    authorize.requestMatchers(HttpMethod.DELETE, "/api/**").hasRole("ADMIN");
-//                    authorize.requestMatchers(HttpMethod.GET, "/api/**").hasAnyRole("ADMIN", "USER");
-//                    authorize.requestMatchers(HttpMethod.PATCH, "/api/**").hasAnyRole("ADMIN", "USER");
-                //    authorize.requestMatchers(HttpMethod.GET, "/registro").permitAll();
-                    authorize.requestMatchers("/login","/login2","/registro").permitAll();
+                    // authorize.requestMatchers(HttpMethod.POST, "/api/**").hasRole("ADMIN");
+                    // authorize.requestMatchers(HttpMethod.PUT, "/api/**").hasRole("ADMIN");
+                    // authorize.requestMatchers(HttpMethod.DELETE, "/api/**").hasRole("ADMIN");
+                    // authorize.requestMatchers(HttpMethod.GET, "/api/**").hasAnyRole("ADMIN",
+                    // "USER");
+                    // authorize.requestMatchers(HttpMethod.PATCH, "/api/**").hasAnyRole("ADMIN",
+                    // "USER");
+                    // authorize.requestMatchers(HttpMethod.GET, "/registro").permitAll();
+                    authorize.requestMatchers("/login", "/login2", "/registro").permitAll();
                     authorize.requestMatchers("/h2-console/**").permitAll();
                     authorize.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();
                     authorize.anyRequest().authenticated();
                 }).httpBasic(Customizer.withDefaults())
                 .headers(headers -> headers.frameOptions().disable());
 
-        http.exceptionHandling( exception -> exception
+        http.exceptionHandling(exception -> exception
                 .authenticationEntryPoint(authenticationEntryPoint));
 
         http.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
@@ -90,14 +96,15 @@ public class SpringSecurityConfig {
         return configuration.getAuthenticationManager();
     }
     // @Bean
-    // public AuthenticationManager authenticationManager(AuthenticationManagerBuilder builder) throws Exception {
-    //     builder.inMemoryAuthentication()
-    //            .withUser("user")
-    //            .password("{noop}password") // Aquí usamos {noop} para indicar que la contraseña está en texto plano
-    //            .roles("USER");
-    //     return builder.build();
+    // public AuthenticationManager
+    // authenticationManager(AuthenticationManagerBuilder builder) throws Exception
+    // {
+    // builder.inMemoryAuthentication()
+    // .withUser("user")
+    // .password("{noop}password") // Aquí usamos {noop} para indicar que la
+    // contraseña está en texto plano
+    // .roles("USER");
+    // return builder.build();
     // }
-
-   
 
 }
