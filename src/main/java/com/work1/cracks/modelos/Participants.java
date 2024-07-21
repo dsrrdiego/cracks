@@ -2,6 +2,7 @@ package com.work1.cracks.modelos;
 
 import lombok.NoArgsConstructor;
 
+import com.work1.cracks.dtos.ParticipantsDto;
 import com.work1.cracks.modelos.aux.RoleParticipants;
 import com.work1.cracks.modelos.aux.StatusParticipants;
 
@@ -15,7 +16,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "Participants")
+@Table(name = "Participants", uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"user_id", "event_id"})
+})
 public class Participants {
     
     @Id
@@ -23,9 +26,11 @@ public class Participants {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @ManyToOne
+    @JoinColumn(name = "event_id", nullable = false)
     private Events event;
 
     @ManyToOne
@@ -47,5 +52,8 @@ public class Participants {
 
     // private float commitementLevel;
 
+    // public Participants(ParticipantsDto d){
+        
+    // }
 
 }

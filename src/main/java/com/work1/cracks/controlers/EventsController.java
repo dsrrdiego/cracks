@@ -88,7 +88,7 @@ public class EventsController {
 
         return new ResponseEntity<Events>(e, HttpStatus.OK);
     }
-    @Operation(summary = "Carga de evento", description = "{'nombre':'dasdas','nombre3':'dasdas'}")
+    // @Operation(summary = "Carga de evento", description = "{'nombre':'dasdas','nombre3':'dasdas'}")
 
     @PostMapping("/postEvent")
     public ResponseEntity<String> postEvent(@RequestBody EventDto e) {

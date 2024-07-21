@@ -15,5 +15,8 @@ public interface RepoParticipants extends JpaRepository<Participants,Long>{
 
     @Query("SELECT p FROM Participants p WHERE p.user.id=:id")
     List<Participants> findByUserId(Long id);
+
+    @Query("SELECT p FROM Participants p WHERE p.user.id=:userId AND p.event.id=:eventId")
+    Participants findByUserAndEvent(Long userId, Long eventId);
     
 }
