@@ -1,17 +1,10 @@
 package com.work1.cracks.modelos;
 
 
-import java.time.LocalDateTime;
-
-import com.work1.cracks.modelos.aux.CategoryGoals;
-import com.work1.cracks.modelos.aux.CommunityGoals;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.NoArgsConstructor;
 
 @Setter
 @Getter

@@ -1,16 +1,8 @@
 package com.work1.cracks.repos;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import com.work1.cracks.modelos.Interest;
-
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.TypedQuery;
 
 public interface RepoInterest extends JpaRepository<Interest,Long>{
     // @Autowired
@@ -20,7 +12,4 @@ public interface RepoInterest extends JpaRepository<Interest,Long>{
     // TypedQuery<Interest> resp = entityManager.createQuery(query, Interest.class);
 
     // List<Interest> getGoals(@Param("idd") Long idd);
-
-   
-    
 }

@@ -11,7 +11,6 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-import com.work1.cracks.modelos.GoalsSports;
 @Setter
 @Getter
 @NoArgsConstructor

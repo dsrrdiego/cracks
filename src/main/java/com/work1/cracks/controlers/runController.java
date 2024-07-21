@@ -2,9 +2,7 @@ package com.work1.cracks.controlers;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -15,13 +13,6 @@ import com.work1.cracks.modelos.Goals;
 import com.work1.cracks.modelos.Interest;
 import com.work1.cracks.modelos.InterestEvent;
 import com.work1.cracks.modelos.Sports;
-import com.work1.cracks.modelos.User;
-import com.work1.cracks.modelos.aux.ClimateSports;
-import com.work1.cracks.modelos.aux.DifficultySports;
-import com.work1.cracks.modelos.aux.RoleParticipants;
-import com.work1.cracks.modelos.aux.StatusEvents;
-import com.work1.cracks.modelos.aux.StatusParticipants;
-import com.work1.cracks.modelos.aux.TypeNotification;
 import com.work1.cracks.repos.RepoEvents;
 import com.work1.cracks.repos.RepoInterest;
 import com.work1.cracks.repos.RepoInterestEvents;
@@ -40,9 +31,7 @@ import com.work1.cracks.repos.aux.RepoStatusNotification;
 import com.work1.cracks.repos.aux.RepoStatusParticipants;
 import com.work1.cracks.repos.aux.RepoTypeNotification;
 
-import org.springframework.context.ApplicationContext;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.CrudRepository;
 
 @Component
 public class runController implements CommandLineRunner {
@@ -120,6 +109,7 @@ public class runController implements CommandLineRunner {
 
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public <T, R extends JpaRepository<T, ?>> void cargar(String tabla, R repo, String[] lista)
             throws ClassNotFoundException, NoSuchMethodException, SecurityException, InstantiationException,
             IllegalAccessException, IllegalArgumentException, InvocationTargetException {
@@ -138,6 +128,7 @@ public class runController implements CommandLineRunner {
     @Autowired
     private RepoEvents re;
 
+    @SuppressWarnings("unused")
     @Autowired
     private RepoUser ru;
 

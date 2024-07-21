@@ -2,7 +2,6 @@ package com.work1.cracks.modelos;
 
 import lombok.NoArgsConstructor;
 
-import com.work1.cracks.dtos.ParticipantsDto;
 import com.work1.cracks.modelos.aux.RoleParticipants;
 import com.work1.cracks.modelos.aux.StatusParticipants;
 

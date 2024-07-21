@@ -1,9 +1,11 @@
 package com.work1.cracks.modelos;
 
-
+/**
+ * @author Diego
+ * @version 1.1
+ */
 
 import java.time.LocalDate;
-import java.util.Date;
 
 import com.work1.cracks.interfaces.SessionRol;
 import com.work1.cracks.interfaces.TypeLogin;
@@ -20,6 +22,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name="Session")
+/**
+ * Session de cada usuario
+ * 
+ */
 public class Session {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)

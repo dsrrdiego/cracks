@@ -29,6 +29,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         this.userDetailsService = userDetailsService;
     }
 
+    @SuppressWarnings("null")
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
@@ -40,7 +41,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         
         // Validate Token
         if(StringUtils.hasText(token) && jwtTokenProvider.validateToken(token)){
-            System.out.println("\nentro\n");
             // get username from token
             String username = jwtTokenProvider.getUsername(token);
 

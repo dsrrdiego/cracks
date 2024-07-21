@@ -1,7 +1,5 @@
 package com.work1.cracks.modelos;
 
-import java.time.LocalDateTime;
-
 import com.work1.cracks.modelos.aux.ClimateSports;
 import com.work1.cracks.modelos.aux.DifficultySports;
 

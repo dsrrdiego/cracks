@@ -1,6 +1,5 @@
 package com.work1.cracks.repos;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,5 +10,6 @@ public interface RepoUser extends JpaRepository<User,Long>{
     // List<User> findByName(String name);
     boolean existsByName(String name);
     User findByName(String name);
+    @SuppressWarnings("null")
     Optional<User> findById(Long id);
 }

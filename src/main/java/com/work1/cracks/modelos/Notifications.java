@@ -1,6 +1,5 @@
 package com.work1.cracks.modelos;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import com.work1.cracks.interfaces.ActiocNotification;
