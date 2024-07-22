@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario de Login</title>
+</head>
+<body>
+    <form id="loginForm">
+        <label for="username">Usuario:</label>
+        <input type="text" id="username" name="username" required>
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" name="password" required>
+        <button type="submit">Iniciar Sesión</button>
+    </form>
+
+    <script>
+        // async function fetchKey() {
+        //     const response = await fetch('http://localhost:8080/encriptar');
+        //     const pem = await response.text();
+        //     return pemToArrayBuffer(pem);
+        // }
+
+
+        document.getElementById('loginForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await fetch(`/encriptar?clave=${encodeURIComponent(password)}`,{
+                    method:'POST'
+                })
+                .then(response=>{
+                    return response.text();
+                }).then(data=>{console.log(data)})
+
+
+               
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+    </script>
+</body>
+</html>

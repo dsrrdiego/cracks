@@ -31,6 +31,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.work1.cracks.auth.JwtTokenProvider;
+import com.work1.cracks.dtos.LoginDto;
 import com.work1.cracks.interfaces.TypeLogin;
 import com.work1.cracks.modelos.User;
 import com.work1.cracks.modelos.Cities;
@@ -40,6 +41,7 @@ import com.work1.cracks.repos.RepoSession;
 import com.work1.cracks.repos.RepoUser;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
@@ -54,12 +56,7 @@ public class AuthController {
     @Autowired
     private RepoCities repoCities;
 
-    /**
-     * el meth desencr .. kluh kuhh kuh
-     * 
-     * @param clave la clvae a desenc
-     * @return un estring ghhh
-     */
+  
 
     public String desEncriptar(MultipartFile clave) {
         try {
@@ -79,6 +76,7 @@ public class AuthController {
             return null;// ResponseEntity.status(500).body("Error al procesar el archivo");
         }
     }
+
     public String desEncriptar(String  clave) {
         try {
             ProcessBuilder processBuilder = new ProcessBuilder("sh","-c","echo -n \""+clave+ "\"|base64 -d |openssl pkeyutl -decrypt -inkey private.pem -passin pass:diego");
@@ -142,6 +140,21 @@ public class AuthController {
 
     }
 
+    @Operation(summary = "Logueo de Usuario via String", description = "Punto de entrada para el Usuario, aqui recibirá un Token para tener acceso a la API")
+    @PostMapping(value = "/login2",consumes = "multipart/form-data")
+    public ResponseEntity<String> login2(@RequestBody LoginDto dto) {
+        String psw=dto.getPwd().replace(" ","\n");
+        System.out.println("vino:\n"+psw);
+        psw = desEncriptar(psw);
+        System.out.println("desenc: "+psw);
+        Authentication auth = authManager.authenticate(
+                new UsernamePasswordAuthenticationToken(dto.getName(), psw));
+        SecurityContextHolder.getContext().setAuthentication(auth);
+        String token = generarToken.generateToken(auth);
+        return new ResponseEntity<String>(token, HttpStatus.OK);
+
+    }
+
     // @Autowired
     // JwtAuthenticationFilter jwtFiltro;
 
@@ -157,6 +170,7 @@ public class AuthController {
     // return "Hola " + a;
     // }
 
+    // @Operation(hidden = true)
     @PostMapping("/encriptar")
     public String encriptar(@RequestParam String clave) throws IOException, InterruptedException {
         ProcessBuilder processBuilder = new ProcessBuilder("sh","-c",
@@ -165,7 +179,8 @@ public class AuthController {
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
             String result = reader.lines().collect(Collectors.joining("\n"));
-            return desEncriptar(result);
+            System.out.println("hash: \n"+result+"\nDesenc: "+desEncriptar(result)+"\n");
+            return result; 
         }
     }
 }
